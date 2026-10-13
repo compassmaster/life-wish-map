@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8f7f3">
+<title>Life Wish Map — やりたいこと × やってきたこと</title>
+<style>
+:root{--paper:#f8f7f3;--ink:#22343b;--muted:#738389;--border:#e4e9e6;--line:#d8e3df;--white:#fff;--shadow:0 18px 48px rgba(40,68,67,.07),0 2px 8px rgba(40,68,67,.025)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;background-color:var(--paper);background-image:radial-gradient(#dce4df 0.8px,transparent 0.8px);background-size:26px 26px;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #e0a85e;outline-offset:4px}a{color:inherit;text-decoration:none}
+.shell{max-width:1150px;margin:auto;padding:0 25px 60px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 30px;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:800;letter-spacing:.12em}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#234442;color:#fff;font-size:17px}.toplink{display:inline-flex;gap:9px;align-items:center;font-size:12px;color:#47615c;background:#ffffffc9;border:1px solid var(--border);border-radius:30px;padding:11px 15px;transition:transform .2s,box-shadow .2s}.toplink:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.intro{text-align:center;margin:19px auto 28px}.eyebrow{font-size:11px;letter-spacing:.23em;font-weight:800;color:#7c928b}.intro h1{font-size:clamp(28px,4.6vw,52px);font-weight:800;letter-spacing:-.06em;line-height:1.33;margin:12px 0 15px}.intro p{color:#72847f;font-size:14px;line-height:1.9;margin:0}
+.center-node{position:relative;isolation:isolate;margin:38px auto 0;max-width:450px;background:#244945;border:1px solid #365b55;color:white;border-radius:29px;box-shadow:0 22px 48px rgba(34,72,69,.2);padding:24px 28px 23px;text-align:center;overflow:hidden}.center-node:before{content:"";position:absolute;z-index:-1;width:330px;height:330px;border:1px solid #ffffff1c;border-radius:50%;top:-180px;right:-95px;box-shadow:0 0 0 60px #ffffff08,0 0 0 125px #ffffff05}.center-icon{display:block;margin:0 auto 8px;font-size:32px}.center-node .overline{font-size:10px;color:#b2d6c6;letter-spacing:.2em;font-weight:700}.center-node h2{font-size:clamp(20px,3vw,26px);margin:9px 0 8px;letter-spacing:-.025em}.center-node p{font-size:12px;color:#c3dad1;line-height:1.7;margin:0}.center-stats{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px}.stat{background:#ffffff18;border:1px solid #ffffff24;border-radius:30px;padding:8px 14px;font-size:12px;color:#e4f4ec}.stat b{font-size:15px;color:#fff}.root-stem{width:2px;height:56px;margin:0 auto;background:linear-gradient(#88a9a0,#d7e4de)}
+.control-row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap}.control-title{display:flex;gap:8px;align-items:center;font-size:12px;color:#82948d;font-weight:700}.control-title:before{content:"";width:7px;height:7px;border-radius:50%;background:#80ad9d}.right-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.button-quiet{padding:10px 12px;border-radius:11px;border:1px solid #dce5df;background:#fff;color:#586e69;font-size:12px;font-weight:700}.button-quiet:hover{border-color:#87aba0;color:#2b5a4b}.search{padding:10px 12px 10px 32px;width:176px;border-radius:11px;border:1px solid #dce5df;background:#fff;outline:none;font-size:12px;color:var(--ink)}.search-wrap{position:relative}.search-wrap:before{content:'⌕';position:absolute;top:4px;left:11px;color:#7d938b;font-size:23px;pointer-events:none}
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:23px 25px;align-items:start;position:relative}.branches:before{content:"";position:absolute;width:75%;height:2px;background:linear-gradient(90deg,transparent,#d1dfd8 20%,#d1dfd8 80%,transparent);top:-1px;left:12.5%}
+.branch{--accent:#b77856;--tint:#fcf0e8;--accentSoft:#ecccb7;position:relative;background:#fffc;border:1px solid var(--border);border-radius:23px;box-shadow:var(--shadow);min-width:0;overflow:visible;transition:box-shadow .2s}.branch:before{content:"";position:absolute;top:-22px;left:50%;width:2px;height:22px;background:#d1dfd8}.branch:after{content:"";position:absolute;top:-25px;left:calc(50% - 3px);width:8px;height:8px;border-radius:50%;background:#b9d0c5}
+.branch[data-tone="play"]{--accent:#bf7657;--tint:#f9ebe2;--accentSoft:#f0c5b3}.branch[data-tone="work"]{--accent:#527baf;--tint:#eaf1fc;--accentSoft:#b9cdec}.branch[data-tone="home"]{--accent:#ad7295;--tint:#f7eaf2;--accentSoft:#e8bdd8}.branch[data-tone="make"]{--accent:#8973b4;--tint:#f2eefa;--accentSoft:#d8c9ed}.branch[data-tone="new"]{--accent:#5d9474;--tint:#e9f4eb;--accentSoft:#c3e2ce}
+.branch-header{border:0;background:none;text-align:left;display:flex;align-items:center;gap:15px;padding:22px 21px;width:100%;color:var(--ink)}.category-icon{width:52px;height:52px;flex:none;display:grid;place-items:center;border-radius:17px;background:var(--tint);font-size:25px}.branch-heading{flex:1;min-width:0}.branch-title{display:block;font-size:17px;font-weight:800;letter-spacing:-.025em}.branch-count{display:block;font-size:11px;color:#8a9696;margin-top:7px}.arrow{width:27px;height:27px;display:grid;place-items:center;font-size:16px;font-weight:800;border-radius:50%;background:var(--tint);color:var(--accent);transition:transform .2s}.branch.open .arrow{transform:rotate(45deg)}.branch.open{box-shadow:0 24px 54px rgba(40,68,67,.1)}
+.branch-body{padding:0 22px 20px 23px}.branch-body[hidden],.idea-extra[hidden]{display:none!important}.idea-tree{border-left:2px solid var(--accentSoft);margin:0 0 0 23px;padding:0 0 2px 19px}.idea-node{position:relative;margin:0 0 10px;animation:appear .23s ease both}.idea-node:before{content:"";position:absolute;top:23px;left:-19px;height:2px;width:17px;background:var(--accentSoft)}.idea-node:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;top:20px;left:-25px;background:var(--accent);border:2px solid white;box-sizing:content-box}
+.idea-button{display:flex;align-items:center;justify-content:space-between;gap:9px;text-align:left;width:100%;border:1px solid #e8ece9;background:#fff;color:#344949;padding:13px 14px;border-radius:12px;transition:background .2s,border-color .2s,transform .2s}.idea-button:hover{background:var(--tint);border-color:var(--accentSoft);transform:translateX(2px)}.idea-button.is-active{background:var(--tint);border-color:var(--accentSoft)}.idea-title{font-size:12.8px;line-height:1.65;font-weight:650}.idea-icon{color:var(--accent);font-size:15px;flex:none}.idea-sub{display:flex;gap:7px;margin-top:6px;align-items:center;font-size:10px;color:#909e98}.tag{font-size:10px;background:#fff;color:var(--accent);padding:2px 8px;border-radius:20px;border:1px solid var(--accentSoft)}
+.idea-extra{margin:7px 0 0 12px;border-left:2px dashed var(--accentSoft);padding:3px 0 2px 14px;color:#647776;font-size:12px;line-height:1.9}.idea-details{padding:8px 7px 12px 0}.idea-details p{margin:0 0 10px}.video-link{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;background:var(--accent);color:white;border-radius:11px;font-size:11px;font-weight:750;transition:opacity .15s}.video-link:hover{opacity:.85}.video-label{display:block;margin-bottom:8px;font-size:11px;color:#667e73}.children{margin-top:8px;padding-left:17px;border-left:2px solid var(--accentSoft)}.children .idea-node:before{left:-17px}.children .idea-node:after{left:-23px}.children .idea-node{margin:0 0 8px}.empty{font-size:12px;color:#889993;background:var(--tint);border-radius:12px;padding:15px 16px;line-height:1.8}.nothing{grid-column:1/-1;background:#fff;border:1px dashed #bccfc3;border-radius:20px;text-align:center;color:#758881;padding:50px 20px}
+.footer{text-align:center;margin:44px 0 0;color:#82928d;font-size:11px;line-height:2}.footer a{text-decoration:underline;text-decoration-color:#b4c7c1;text-underline-offset:3px}.footer em{font-style:normal;color:#5f7d74}
+@keyframes appear{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@media (max-width:700px){.shell{padding:0 16px 45px}.topbar{padding:18px 0 22px}.intro{margin:15px auto 15px}.intro p{font-size:12px}.center-node{margin-top:27px;padding:23px 15px;border-radius:24px}.root-stem{height:40px}.branches{grid-template-columns:1fr;gap:17px}.branches:before{width:2px;height:100%;left:18px;top:-15px;background:#d1dfd8}.branch{margin-left:25px}.branch:before{left:-26px;top:40px;width:25px;height:2px}.branch:after{left:-31px;top:37px}.branch-header{padding:17px 16px}.category-icon{width:45px;height:45px;border-radius:13px;font-size:23px}.branch-title{font-size:15px}.branch-body{padding:0 15px 16px}.control-row{gap:12px}.control-title{width:100%}.right-controls{width:100%}.search-wrap{flex:1}.search{width:100%}.button-quiet{font-size:11px;padding:10px}.idea-tree{margin-left:13px;padding-left:16px}.idea-node:before{left:-16px}.idea-node:after{left:-22px}.idea-title{font-size:12px}.footer{margin-top:32px}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Two-page life map navigation */
+.switch-status{display:flex;align-items:center;justify-content:center;gap:16px;margin:30px auto 0;color:#5b7e73;font-weight:750;font-size:12px;letter-spacing:.06em}
+#mode-pill{background:#eaf4ee;border:1px solid #d8e7dc;border-radius:100px;padding:8px 16px;min-width:158px;text-align:center}
+.page-dots{display:flex;gap:7px}.page-dot{width:7px;height:7px;background:#bdccc6;border-radius:10px;transition:background .26s,width .26s}.page-dot.is-active{width:21px;background:#477f69}
+.center-switch{display:grid;grid-template-columns:minmax(45px,70px) minmax(0,450px) minmax(45px,70px);gap:17px;align-items:center;justify-content:center;margin:0 auto;max-width:680px}
+.center-switch .center-node{width:100%;margin:20px 0 0}
+.switch-arrow{display:grid;place-items:center;width:52px;height:52px;margin-top:18px;background:#fff;color:#3b7060;border:1px solid #d6e7de;border-radius:50%;font-size:34px;line-height:1;box-shadow:0 8px 24px #253f3916;transition:transform .17s,background .17s,color .17s,border-color .17s;justify-self:center;user-select:none}
+.switch-arrow:hover{transform:scale(1.1);background:#eaf6ee;border-color:#8db3a0}.switch-arrow:active{transform:scale(.95)}
+.swipe-hint{text-align:center;margin:14px auto 0;color:#82938c;font-size:11px}
+body[data-mode="past"]{--paper:#f4f7fc;--ink:#273954;--muted:#697e9a;--border:#dae5f3;--line:#c7d8e8;background-image:radial-gradient(#d5e0ef 0.8px,transparent 0.8px)}
+body[data-mode="past"] .brand-mark{background:#365786}
+body[data-mode="past"] .intro .eyebrow{color:#7991b3}
+body[data-mode="past"] .intro p{color:#7389a7}
+body[data-mode="past"] .center-node{background:#2c4e7b;border-color:#4d6891;box-shadow:0 22px 48px rgba(44,73,125,.23)}
+body[data-mode="past"] .center-node .overline{color:#c5d9f4}
+body[data-mode="past"] .center-node p{color:#dce8f9}
+body[data-mode="past"] #mode-pill{background:#e6eef9;border-color:#cfddf1;color:#365c91}
+body[data-mode="past"] .page-dot.is-active{background:#4f78b2}
+body[data-mode="past"] .switch-arrow{color:#406ba0;border-color:#ccdcf0}
+body[data-mode="past"] .switch-arrow:hover{background:#e7f0fb}
+body[data-mode="past"] .control-title{color:#667fa1}
+body[data-mode="past"] .control-title:before{background:#719bca}
+body[data-mode="past"] .button-quiet{border-color:#d6e2f1;color:#52729b}
+body[data-mode="past"] .button-quiet:hover{border-color:#8dadcf;color:#355986}
+body[data-mode="past"] .search{border-color:#d6e2f1}
+body[data-mode="past"] .branches:before,body[data-mode="past"] .branch:before{background:#c2d4ec}
+body[data-mode="past"] .branch:after{background:#adc6e5}
+body[data-mode="past"] .branch[data-tone="play"]{--accent:#527ea8;--tint:#e9f2fc;--accentSoft:#bad2ed}
+body[data-mode="past"] .branch[data-tone="work"]{--accent:#4d75b3;--tint:#e8eefb;--accentSoft:#b6c7ed}
+body[data-mode="past"] .branch[data-tone="home"]{--accent:#7c70b8;--tint:#f0edfc;--accentSoft:#d4c7ee}
+body[data-mode="past"] .branch[data-tone="make"]{--accent:#4b94a6;--tint:#e6f4f6;--accentSoft:#b7dce5}
+body[data-mode="past"] .branch[data-tone="new"]{--accent:#9273a8;--tint:#f4eff9;--accentSoft:#dfceec}
+body[data-mode="past"] .footer em{color:#5879ab}
+@keyframes slideIn{from{opacity:.38;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.page-animate{animation:slideIn .34s ease both}
+@media(max-width:700px){.center-switch{grid-template-columns:35px minmax(0,1fr) 35px;gap:5px}.center-switch .center-node{margin-top:17px;padding:22px 10px}.switch-arrow{width:34px;height:46px;border-radius:12px;font-size:29px;box-shadow:0 3px 12px #253f3910}.switch-status{margin-top:18px}.swipe-hint{padding:0 20px;font-size:10px}.center-node .stat{padding:7px 9px;font-size:10px}.center-node p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.page-animate{animation:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar"><a class="brand" href="#top" aria-label="先頭へ"><span class="brand-mark">✳</span><span>LIFE WISH MAP</span></a><span class="toplink" aria-label="公開マインドマップ">公開版 · 2026.10</span></header>
+<main id="top">
+<div class="intro"><div class="eyebrow" id="page-eyebrow">MY LITTLE DREAM ATLAS · 2026</div><h1 id="page-headline">「いつか」を、見える形に。</h1><p id="page-intro">人生でやりたいことのマインドマップ。<br>枝をタップすると、その夢の続きが広がります。</p></div>
+<div class="switch-status" aria-live="polite"><span id="mode-pill">🌿 未来・やりたいこと</span><span class="page-dots" aria-hidden="true"><span class="page-dot is-active"></span><span class="page-dot"></span></span></div>
+<div class="center-switch"><button type="button" class="switch-arrow" id="prev-page" aria-label="前のマップへ切り替える" title="マップを切り替え">‹</button>
+<section class="center-node" id="center-node" aria-label="人生でやりたいこと"><span class="center-icon" id="center-icon">🌱</span><div class="overline" id="center-overline">THE CENTER OF MY WISHES</div><h2 id="center-title">人生でやりたいこと</h2><p id="center-copy">大きな夢も、ちょっとした楽しみも。<br>思いつくたびに、未来の枝を増やしていこう。</p><div class="center-stats"><span class="stat"><b id="all-count">15</b> <span id="item-count-label">個のやりたいこと</span></span><span class="stat"><b id="group-count">5</b> つの分野</span></div></section>
+<button type="button" class="switch-arrow" id="next-page" aria-label="次のマップへ切り替える" title="マップを切り替え">›</button></div>
+<div class="swipe-hint" id="swipe-hint">左右の矢印で「やりたいこと」と「やってきたこと」を切り替え ↔</div>
+<div class="root-stem" aria-hidden="true"></div>
+<div class="control-row"><div class="control-title" id="control-title">気になる分野をタップして展開</div><div class="right-controls"><label class="search-wrap"><input class="search" id="search" type="search" autocomplete="off" placeholder="やりたいことを探す" aria-label="項目を検索"></label><button type="button" class="button-quiet" id="open-all">すべて開く ＋</button><button type="button" class="button-quiet" id="close-all">閉じる −</button></div></div>
+<div class="branches" id="branches" aria-label="マインドマップの枝"></div>
+<footer class="footer"><em id="footer-tagline">🌿 少しずつ、育てていくマップ。</em><br>2026年10月14日更新。大切にしている夢と、これまでの経験をまとめた公開マップ。<br>※ このサイトは自動更新されません。新しい目標や達成に応じて更新していきます。</footer>
+</main></div>
+<script>
+'use strict';
+// Public-facing copy of the Life Wish Map, prepared 2026-10-14. No private repository dependencies.
+const futureGroups = [
+ {id:'play',tone:'play',icon:'🎮',title:'趣味・楽しみ',items:[
+   {id:'pc',title:'ゲーミングPCを買う',note:'たこまるさんの動画がきっかけ。初めての1台はBTO完成品を選び、将来はパーツ交換にも挑戦したい。本体予算は37万円前後を基準に検討中。',channel:{title:'たこまる / TAKOMARU',url:'https://www.youtube.com/channel/UC5jLzUQiTIk8CWiShdqQfDQ'},children:[
+      {id:'pc-spec',title:'理想のBTO構成を比較する',note:'基準は Ryzen 7 9800X3D・RTX 5070 Ti（16GB）・メモリ32GB・SSD 2TB。RTX 5080搭載BTOとの性能差や、冷却・電源・保証も比較。'},
+      {id:'pc-price',title:'PC・部品・モニターの価格を追う',note:'NEXTGEAR HD-A7G7Tの2025年11月の紹介価格は369,800円（税込・送料無料）。今後は確認日・仕様・店舗・税込価格・変動理由を記録し、値下がり傾向を見極める。※この価格は現在の販売価格ではない。',},
+      {id:'pc-timing',title:'最後の春休みか就職後かを比較する',note:'2027年2〜3月の春休みに遊べるメリットと、就職後に資金が安定してから買えるメリットを比べる。分割払いは手数料・支払総額まで確認。'},
+      {id:'pc-monitors',title:'4Kメイン＋サブ、将来は3画面へ',note:'中央は4K高リフレッシュレートでゲーム兼事務作業。サブはChatGPT・攻略資料向けの縦置き、動画向けの横置きを想定。サイズは購入時の良い製品と机の広さで柔軟に決める。候補は GigaCrysta S EX-GDU271JLAQD、比較例として KTC H27T22C-3。'},
+      {id:'elden',title:'ELDEN RING（エルデンリング）を4Kで遊ぶ',full:'そのPCで『ELDEN RING（エルデンリング）』を最高画質・安定した動きで遊ぶ',note:'PC版は通常60fpsが上限。最初に遊びたいと思ったきっかけの動画も残しておく。',video:{title:'【検証】ほぼゲームド素人の社会人OLがエルデンリングを100時間遊ぶと何が起こるのか【前編】',url:'https://www.youtube.com/watch?v=sPf6EQ5B6Rc'}}]},
+   {id:'wuthering',title:'鳴潮を4K最高画質で楽しむ',full:'『鳴潮』を4K・最高画質で、カクつかず滑らかに楽しむ',note:'必ず120fpsでなくてもよい。まずは安定60fps以上を目安に、画質と安定性を重視する。'},
+   {id:'game-home',title:'ゲーム・作業に没頭できる環境を作る',full:'ゲームだけでなくWord、Excel、プログラミングも快適な自分のデスク環境を整える'},
+   {id:'live',title:'Ayumu Imazuのライブに行く',full:'Ayumu Imazu のライブに行く'},
+   {id:'dance',title:'好きな曲をもっと踊れるようになる',full:'ダンスをもっと楽しみ、好きな曲を踊れるようになる'}
+ ]},
+ {id:'work',tone:'work',icon:'⚡',title:'仕事・資格',items:[
+  {id:'denken',title:'電験三種に合格する'},
+  {id:'electrician',title:'第一種電気工事士の取得を目指す',full:'第一種電気工事士の資格取得を目指す'},
+  {id:'independent',title:'電気管理技術者として独立する'},
+  {id:'kyushu',title:'九州の自然がある場所で働く',full:'九州の自然がある地域を拠点に、自分らしく働く'},
+  {id:'salary',title:'年収650万円以上を目指す'}
+ ]},
+ {id:'home',tone:'home',icon:'🏠',title:'暮らし・家族',items:[
+  {id:'ideal-home',title:'理想の家・暮らしを実現する',full:'自分の理想の家・暮らしを実現する'},
+  {id:'husband',title:'いい夫になる'},
+  {id:'father',title:'いい父親になる'}
+ ]},
+ {id:'make',tone:'make',icon:'💻',title:'ものづくり',items:[
+  {id:'compass',title:'Compassを育てる',full:'「Compass」を育てて、体調・行動・環境のつながりを理解できるAIにする'}
+ ]},
+ {id:'new',tone:'new',icon:'✨',title:'新しく思いついたこと',items:[]}
+];
+const pastGroups = [
+ {id:'learn',tone:'work',icon:'🎓',title:'学び・資格',items:[
+   {id:'kosen',title:'高専で電気電子工学を学ぶ',note:'専門知識を学び、卒業研究にも取り組んできた。'},
+   {id:'theory',title:'電験三種「理論」に合格',note:'難しい資格への挑戦を重ねてきた中での確かな一歩。'},
+   {id:'research',title:'OAフロア床下を走る移動体の研究',note:'Arduino・XBee・SDカードなどを使い、無線通信型移動体の研究に取り組んでいる。'}
+ ]},
+ {id:'career',tone:'play',icon:'⚡',title:'仕事・挑戦',items:[
+   {id:'offer',title:'希望する技術職の内々定を得た',note:'技術職として選考に挑み、内々定を得た。'},
+   {id:'ceremony',title:'内定式に参加した',note:'就職に向けて、新たな一歩。'},
+   {id:'pizza',title:'ピザ配達のアルバイトを経験',note:'働きながら、学びや趣味も続けてきた。'},
+   {id:'care-kitchen',title:'老人ホームの厨房でアルバイト',note:'飲食の現場でも経験を積んだ。'}
+ ]},
+ {id:'sports',tone:'make',icon:'🏸',title:'スポーツ・好きなこと',items:[
+   {id:'badminton',title:'バドミントンで県大会ベスト4',note:'団体・個人でベスト4を経験。'},
+   {id:'running',title:'ランニングを続けてきた',note:'日々の体づくりや気分転換にも。'},
+   {id:'dance-try',title:'好きな曲を見ながらダンスに挑戦',note:'Ayumu Imazuの「Superstar」などを見ながら踊る楽しさを実感。'}
+ ]},
+ {id:'community',tone:'home',icon:'🤝',title:'人とのつながり',items:[
+   {id:'dorm',title:'寮生会の役員を経験',note:'集団生活の中で、人を支える役割にも挑んできた。'},
+   {id:'mountain',title:'山村留学を経験',note:'暮らしや人との関わりを通して、視野を広げる経験。'},
+   {id:'anniversary',title:'大切な人と記念旅行',note:'大切な人と記念の旅行を楽しんだ。'}
+ ]},
+ {id:'creative',tone:'new',icon:'💻',title:'ものづくり・自分の記録',items:[
+   {id:'compass-mvp',title:'CompassのMVP開発を進めた',note:'毎日の体調・行動を理解するAIを目指し、MVP-01とMVP-02を実装。'},
+   {id:'life-map',title:'GitHubに「やりたいこと」をまとめた',note:'未来の夢を言葉にして記録し、切り替えられるマインドマップを作った。'},
+   {id:'pc-plan',title:'ゲーミングPCの購入計画を具体化した',note:'2026年10月、BTOの希望仕様・4Kメイン＋サブの構成・最後の春休みと就職後の比較を整理。価格変動を追うための記録表も用意した。'}
+ ]}
+];
+const countItems = arr => arr.reduce((n,it)=>n+1+countItems(it.children||[]),0);
+const pages={
+ future:{groups:futureGroups,eyebrow:'MY LITTLE DREAM ATLAS · 2026',headline:'「いつか」を、見える形に。',intro:'人生でやりたいことのマインドマップ。<br>枝をタップすると、その夢の続きが広がります。',pill:'🌿 未来・やりたいこと',icon:'🌱',overline:'THE CENTER OF MY WISHES',title:'人生でやりたいこと',copy:'大きな夢も、ちょっとした楽しみも。<br>思いつくたびに、未来の枝を増やしていこう。',countLabel:'個のやりたいこと',search:'やりたいことを探す',groupCount:'個のやりたいこと',empty:'ここには、これから思いついた夢を追加していこう 🌱',footer:'🌿 少しずつ、育てていくマップ。'},
+ past:{groups:pastGroups,eyebrow:'MY LITTLE LIFE STORY · 2026',headline:'「あの頃」を、見える形に。',intro:'人生でやってきたことのマインドマップ。<br>積み重ねた経験が、今の自分につながっています。',pill:'📘 過去・やってきたこと',icon:'📘',overline:'THE PATH I HAVE WALKED',title:'人生でやってきたこと',copy:'挑戦したことも、楽しんだことも。<br>自分が歩いてきた道を、ここに残そう。',countLabel:'個の経験・出来事',search:'やってきたことを探す',groupCount:'個の経験・出来事',empty:'これから思い出を追加していこう 📘',footer:'📘 歩いてきた道にも、たくさんの物語。'}
+};
+let mode='future';
+let groups=pages.future.groups;
+const expandedByMode={future:{groups:new Set(['play']),items:new Set(['pc','pc-spec','pc-price','elden'])},past:{groups:new Set(['learn']),items:new Set()}};
+let expandedGroups=expandedByMode.future.groups;
+let expandedItems=expandedByMode.future.items;
+function setMode(next){
+ if(!pages[next])return;
+ mode=next;groups=pages[mode].groups;
+ expandedGroups=expandedByMode[mode].groups;expandedItems=expandedByMode[mode].items;
+ const p=pages[mode];
+ document.body.dataset.mode=mode;
+ document.title='Life Map — '+p.title;
+ document.getElementById('page-eyebrow').textContent=p.eyebrow;
+ document.getElementById('page-headline').textContent=p.headline;
+ document.getElementById('page-intro').innerHTML=p.intro;
+ document.getElementById('mode-pill').textContent=p.pill;
+ document.querySelectorAll('.page-dot').forEach((d,i)=>d.classList.toggle('is-active',i===(mode==='future'?0:1)));
+ document.getElementById('center-icon').textContent=p.icon;
+ document.getElementById('center-overline').textContent=p.overline;
+ document.getElementById('center-title').textContent=p.title;
+ document.getElementById('center-node').setAttribute('aria-label',p.title);
+ document.getElementById('center-copy').innerHTML=p.copy;
+ document.getElementById('all-count').textContent=groups.reduce((n,g)=>n+countItems(g.items),0);
+ document.getElementById('group-count').textContent=groups.length;
+ document.getElementById('item-count-label').textContent=p.countLabel;
+ document.getElementById('search').value='';
+ document.getElementById('search').placeholder=p.search;
+ document.getElementById('footer-tagline').textContent=p.footer;
+ render();
+ for(const id of ['page-headline','center-node','branches']){
+   const el=document.getElementById(id);el.classList.remove('page-animate');void el.offsetWidth;el.classList.add('page-animate');
+ }
+}
+document.getElementById('prev-page').addEventListener('click',()=>setMode(mode==='future'?'past':'future'));
+document.getElementById('next-page').addEventListener('click',()=>setMode(mode==='future'?'past':'future'));
+document.addEventListener('keydown',e=>{
+ if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)return;
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setMode(mode==='future'?'past':'future');}
+});
+const escapeHtml = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const plainSearch = (s,q) => (s||'').toLocaleLowerCase().includes(q);
+const itemMatches = (it,q) => !q || [it.title,it.full,it.note,it.video?.title,it.channel?.title,it.doc?.title].some(x=>plainSearch(x,q)) || (it.children||[]).some(c=>itemMatches(c,q));
+function renderIdea(it,q=''){
+ if(q&&!itemMatches(it,q))return '';
+ const willExpand=q?true:expandedItems.has(it.id);
+ const more=it.note || it.full || it.video || it.channel || (it.children&&it.children.length);
+ const details = `<div class="idea-details">${(it.full&&it.full!==it.title)?'<p>'+escapeHtml(it.full)+'</p>':''}${it.note?'<p>'+escapeHtml(it.note)+'</p>':''}${it.video?'<span class="video-label">🎬 やってみたいと思ったきっかけの動画</span><a class="video-link" href="'+escapeHtml(it.video.url)+'" target="_blank" rel="noopener noreferrer">▶ YouTubeで動画を見る ↗</a>':''}${it.channel?'<span class="video-label">📺 ゲーミングPCに憧れたきっかけのチャンネル</span><a class="video-link" href="'+escapeHtml(it.channel.url)+'" target="_blank" rel="noopener noreferrer">▶ '+escapeHtml(it.channel.title)+' のチャンネルを見る ↗</a>':''}${it.doc?'<span class="video-label">📋 計画・比較・価格ウォッチ</span><a class="video-link" href="'+escapeHtml(it.doc.url)+'" target="_blank" rel="noopener noreferrer">↗ '+escapeHtml(it.doc.title)+' を見る</a>':''}</div>`;
+ const children=(it.children||[]).filter(x=>itemMatches(x,q));
+ return `<div class="idea-node"><button type="button" class="idea-button ${willExpand?'is-active':''}" data-item="${escapeHtml(it.id)}" aria-expanded="${willExpand}" aria-controls="idea-detail-${escapeHtml(it.id)}"><span><span class="idea-title">${escapeHtml(it.title)}</span>${it.video?'<span class="idea-sub"><span class="tag">🎬 動画あり</span></span>':''}${it.channel?'<span class="idea-sub"><span class="tag">📺 チャンネルあり</span></span>':''}</span><span class="idea-icon" aria-hidden="true">${willExpand?'−':'+'}</span></button><div class="idea-extra" id="idea-detail-${escapeHtml(it.id)}" ${willExpand?'':'hidden'}>${details}${children.length?'<div class="children">'+children.map(c=>renderIdea(c,q)).join('')+'</div>':''}</div></div>`;
+}
+function render(){
+ const q=document.getElementById('search').value.trim().toLocaleLowerCase();
+ const list=groups.filter(g=>!q||plainSearch(g.title,q)||g.items.some(it=>itemMatches(it,q)));
+ const container=document.getElementById('branches');
+ container.innerHTML=list.length?list.map(g=>{
+ const isOpen=q?true:expandedGroups.has(g.id);
+ const items=q&&!plainSearch(g.title,q)?g.items.filter(it=>itemMatches(it,q)):g.items;
+ const size=countItems(g.items);
+ return `<section class="branch ${isOpen?'open':''}" data-tone="${g.tone}"><button type="button" class="branch-header" data-group="${g.id}" aria-expanded="${isOpen}" aria-controls="branch-body-${g.id}"><span class="category-icon" aria-hidden="true">${g.icon}</span><span class="branch-heading"><span class="branch-title">${g.title}</span><span class="branch-count">${size===0?'これから増えていく場所':size+' '+pages[mode].groupCount}</span></span><span class="arrow" aria-hidden="true">＋</span></button><div class="branch-body" id="branch-body-${g.id}" ${isOpen?'':'hidden'}>${items.length?'<div class="idea-tree">'+items.map(it=>renderIdea(it,q)).join('')+'</div>':'<div class="empty">'+pages[mode].empty+'</div>'}</div></section>`;
+ }).join(''):'<div class="nothing">該当する項目が見つからなかったよ。別の言葉で探してみてね。</div>';
+}
+const branches=document.getElementById('branches');
+branches.addEventListener('click',e=>{
+ const g=e.target.closest('[data-group]');
+ if(g){const id=g.dataset.group; expandedGroups.has(id)?expandedGroups.delete(id):expandedGroups.add(id);render();return;}
+ const i=e.target.closest('[data-item]');
+ if(i){const id=i.dataset.item;expandedItems.has(id)?expandedItems.delete(id):expandedItems.add(id);render();return;}
+});
+document.getElementById('open-all').addEventListener('click',()=>{
+ groups.forEach(g=>{expandedGroups.add(g.id);const scan=items=>items.forEach(i=>{expandedItems.add(i.id);scan(i.children||[])});scan(g.items)});render();
+});
+document.getElementById('close-all').addEventListener('click',()=>{expandedGroups.clear();expandedItems.clear();render()});
+document.getElementById('search').addEventListener('input',render);
+setMode('future');
+</script>
+</body>
+</html>
